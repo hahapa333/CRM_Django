@@ -5,3 +5,4 @@ gunicorn
 django-admin-interface>=0.24
 django-colorfield
 pylint-django
+pytest
