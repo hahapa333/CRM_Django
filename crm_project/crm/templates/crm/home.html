@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h2>Добро пожаловать в CRM!</h2>
+
+    {% if user.is_authenticated %}
+      <div class="alert alert-info">
+        <p><strong>Пользователь:</strong> {{ username }}</p>
+        <p><strong>Роли:</strong>
+          {% if groups %}
+            {{ groups|join:", " }}
+          {% else %}
+            Без роли
+          {% endif %}
+        </p>
+      </div>
+    {% else %}
+      <p>Вы не вошли в систему. <a href="{% url 'login' %}">Войти</a></p>
+    {% endif %}
+  </div>
+{% endblock %}

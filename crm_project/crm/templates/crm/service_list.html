@@ -1,0 +1,14 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+<h2>Услуги</h2>
+<a href="{% url 'service_create' %}">+ Новая услуга</a>
+<ul>
+    {% for service in object_list %}
+        <li>{{ service.name }} —
+            <a href="{% url 'service_edit' service.pk %}">Редактировать</a>
+        </li>
+    {% empty %}
+        <li>Нет доступных услуг.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

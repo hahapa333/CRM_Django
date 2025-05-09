@@ -1,0 +1,44 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+<h2>Рекламные кампании</h2>
+<a href="{% url 'campaign_create' %}">+ Новая кампания</a>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Название</th>
+        <th>Дата начала</th>
+        <th>Дата окончания</th>
+        <th>Бюджет</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for campaign in object_list %}
+    <tr>
+        <td><a href="{% url 'campaign_detail' campaign.pk %}">{{ campaign.name }}</a></td>
+        <td>{{ campaign.start_date }}</td>
+        <td>{{ campaign.end_date }}</td>
+        <td>{{ campaign.budget }}</td>
+        <td>
+            <form action="{% url 'campaign_edit' campaign.pk %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Edit?');">
+                    Edit
+                </button>
+            </form>
+            <form action="{% url 'campaign_delete' campaign.pk %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Del?');">
+                    Delete
+                </button>
+            </form>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5">Нет кампаний</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'crm/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Список потенциальных клиентов</h2>
+    <a href="{% url 'lead_create' %}">Создать потенциального клиента</a>
+
+    <table class="table table-striped table-hover mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Имя</th>
+                <th>Email</th>
+                <th>Телефон</th>
+                <th>Кампания</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lead in object_list %}
+                <tr>
+                    <td>{{ lead.name }}</td>
+                    <td>{{ lead.email }}</td>
+                    <td>{{ lead.phone }}</td>
+                    <td>{{ lead.campaign.name }}</td>
+                    <td>
+                        {% if not lead.is_converted %}
+                            <a href="{% url 'client_with_contract_create' %}?lead_id={{ lead.id }}" class="btn btn-sm btn-primary">
+                                Создать клиента
+                            </a>
+                        {% else %}
+                            <span class="badge bg-success">Конвертирован</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

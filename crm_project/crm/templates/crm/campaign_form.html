@@ -1,0 +1,9 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+<h2>{{ view.object.pk|yesno:"Редактировать кампанию,Создать кампанию" }}</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Сохранить</button>
+</form>
+{% endblock %}

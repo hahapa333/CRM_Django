@@ -1,0 +1,35 @@
+<!-- crm/templates/crm/campaign_stats.html -->
+{% extends 'crm/base.html' %}
+
+{% block content %}
+<h2>Статистика по рекламным кампаниям</h2>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Кампания</th>
+        <th>Привлечено клиентов</th>
+        <th>Стало активными</th>
+        <th>Доход (₽)</th>
+        <th>Бюджет (₽)</th>
+        <th>Доход/Расход</th>
+    </tr>
+    <tbody>
+    {% for item in stats %}
+    <tr>
+        <td>{{ item.campaign.name }}</td>
+        <td>{{ item.total_leads }}</td>
+        <td>{{ item.converted_clients }}</td>
+        <td>{{ item.income }}</td>
+        <td>{{ item.budget }}</td>
+        <td>{{ item.roi }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="6">Нет данных.</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

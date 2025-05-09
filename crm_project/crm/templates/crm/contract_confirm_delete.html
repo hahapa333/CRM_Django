@@ -1,0 +1,10 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+<h2>Удалить контракт</h2>
+<p>Вы уверены, что хотите удалить контракт клиента {{ object.client.lead.name }}?</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Да, удалить</button>
+  <a href="{% url 'contract_list' %}">Отмена</a>
+</form>
+{% endblock %}

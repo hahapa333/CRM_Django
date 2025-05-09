@@ -1,0 +1,23 @@
+{% extends 'crm/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Создать контракт</h2>
+    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="mb-3">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <div class="text-danger small">
+                        {{ field.errors|striptags }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a href="{% url 'contract_list' %}" class="btn btn-secondary">Назад</a>
+    </form>
+</div>
+{% endblock %}

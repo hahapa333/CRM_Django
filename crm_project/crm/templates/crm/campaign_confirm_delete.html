@@ -1,0 +1,10 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+<h2>Удалить кампанию</h2>
+<p>Вы уверены, что хотите удалить "{{ object.name }}"?</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Да, удалить</button>
+  <a href="{% url 'campaign_list' %}">Отмена</a>
+</form>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+<h2>{{ campaign.name }}</h2>
+<p><strong>Начало:</strong> {{ campaign.start_date }}</p>
+<p><strong>Окончание:</strong> {{ campaign.end_date }}</p>
+<p><strong>Бюджет:</strong> {{ campaign.budget }}</p>
+<a href="{% url 'campaign_edit' campaign.pk %}">Редактировать</a>
+{% endblock %}

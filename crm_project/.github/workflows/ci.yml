@@ -1,0 +1,43 @@
+name: CI/CD for Django with Docker
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: crm_user
+          POSTGRES_PASSWORD: crm_pass
+          POSTGRES_DB: crm
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U crm_user"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Docker
+      run: |
+        docker-compose up -d db
+        docker-compose build web
+
+    - name: Run migrations
+      run: docker-compose exec web python manage.py migrate
+
+    - name: Run tests
+      run: docker-compose exec web pytest

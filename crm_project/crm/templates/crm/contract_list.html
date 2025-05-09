@@ -1,0 +1,47 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+<h2>Контракты</h2>
+<a href="{% url 'contract_create' %}">+ Новый контракт</a>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Клиент</th>
+        <th>Услуга</th>
+        <th>Дата подписания</th>
+        <th>Дата окончания</th>
+        <th>Сумма</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for contract in object_list %}
+    <tr>
+        <td><a href="{% url 'contract_detail' contract.pk %}">{{ contract.client.lead.name }}</a></td>
+        <td>{{ contract.service.name }}</td>
+        <td>{{ contract.signed_date }}</td>
+        <td>{{ contract.valid_until }}</td>
+        <td>{{ contract.amount }}</td>
+        <td>
+
+            <form action="{% url 'contract_edit' contract.pk %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Edit?');">
+                    Edit
+                </button>
+            </form>
+            <form action="{% url 'contract_delete' contract.pk %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Del?');">
+                    Delete
+                </button>
+            </form>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="6">Нет контрактов.</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
